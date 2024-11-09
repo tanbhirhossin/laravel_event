@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('event_tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('vendor_id');
-            $table->date('pay_date');
-            $table->decimal('pay_amount');
-            $table->integer('event_expense_id');
-            $table->integer('client_id');
+            $table->string('event_id');
+            $table->string('employee_id');
+            $table->string('task');
+            $table->date('assign_date');
+            $table->date('finish_date');
+            $table->decimal('cost');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('event_tasks');
     }
 };

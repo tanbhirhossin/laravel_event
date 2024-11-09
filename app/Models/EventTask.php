@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class EventTask extends Model
 {
     use HasFactory;
-    protected $fillable=['vendor_id', 'pay_date', 'pay_amount', 'event_expense_id','client_id'];
+    protected $fillable=['event_id', 'employee_id', 'task', 'assign_date','finish_date','cost'];
 }

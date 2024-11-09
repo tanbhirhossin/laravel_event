@@ -11,6 +11,13 @@ use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\VendorController;
+use App\Http\Controllers\Api\TimelineController;
+use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\EventtaskController;
+use App\Http\Controllers\Api\ExpenseController;
+use App\Http\Controllers\Api\PaymentController;
+
+
 // use App\Http\Controllers\Api\DesignationController;
 /*
 |--------------------------------------------------------------------------
@@ -87,8 +94,43 @@ Route::controller(RoleController::class)->group(function(){
 Route::controller(VendorController::class)->group(function(){
     Route::get('vendor','index');
     Route::post('vendor/create','store');
-    Route::get('vendor/{rovendorle}','show');
+    Route::get('vendor/{vendor}','show');
     Route::post('vendor/edit/{id}','update');
     Route::delete('vendor/{vendor}','destroy');
+});
+Route::controller(TimelineController::class)->group(function(){
+    Route::get('timeline','index');
+    Route::post('timeline/create','store');
+    Route::get('timeline/{timeline}','show');
+    Route::post('timeline/edit/{id}','update');
+    Route::delete('timeline/{timeline}','destroy');
+});
+Route::controller(EmployeeController::class)->group(function(){
+    Route::get('employee','index');
+    Route::post('employee/create','store');
+    Route::get('employee/{employee}','show');
+    Route::post('employee/edit/{id}','update');
+    Route::delete('employee/{employee}','destroy');
+});
+Route::controller(EventtaskController::class)->group(function(){
+    Route::get('eventtask','index');
+    Route::post('eventtask/create','store');
+    Route::get('eventtask/{eventtask}','show');
+    Route::post('eventtask/edit/{id}','update');
+    Route::delete('eventtask/{eventtask}','destroy');
+});
+Route::controller(ExpenseController::class)->group(function(){
+    Route::get('expense','index');
+    Route::post('expense/create','store');
+    Route::get('expense/{expense}','show');
+    Route::post('expense/edit/{id}','update');
+    Route::delete('expense/{expense}','destroy');
+});
+Route::controller(PaymentController::class)->group(function(){
+    Route::get('payment','index');
+    Route::post('payment/create','store');
+    Route::get('payment/{payment}','show');
+    Route::post('payment/edit/{id}','update');
+    Route::delete('payment/{payment}','destroy');
 });
 
