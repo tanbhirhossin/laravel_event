@@ -8,7 +8,7 @@ use App\Models\Event;
 class EventController extends BaseController
 {
     public function index(){
-        $data=Event::get();
+        $data=Event::with('client')->get();
         return $this->sendResponse($data,"Event data");
     }
 

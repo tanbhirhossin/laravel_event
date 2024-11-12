@@ -8,7 +8,7 @@ use App\Models\EventTask;
 class EventtaskController extends BaseController
 {
     public function index(){
-        $data=EventTask::get();
+        $data=EventTask::with('event')->get();
         return $this->sendResponse($data,"EventTask data");
     }
 

@@ -134,3 +134,4 @@ Route::controller(PaymentController::class)->group(function(){
     Route::delete('payment/{payment}','destroy');
 });
 
+
