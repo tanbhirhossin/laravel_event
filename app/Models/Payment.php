@@ -9,5 +9,18 @@ class Payment extends Model
 {
     use HasFactory;
     protected $fillable=['vendor_id', 'pay_date', 'pay_amount', 'event_expense_id','client_id'];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendors::class, 'vendor_id');
+    }
+    public function expense()
+    {
+        return $this->belongsTo(Expense::class, 'event_expense_id');
+    }
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
 }
 

@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\EventtaskController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\ItemController;
 
 
 // use App\Http\Controllers\Api\DesignationController;
@@ -132,6 +133,13 @@ Route::controller(PaymentController::class)->group(function(){
     Route::get('payment/{payment}','show');
     Route::post('payment/edit/{id}','update');
     Route::delete('payment/{payment}','destroy');
+});
+Route::controller(ItemController::class)->group(function(){
+    Route::get('item','index');
+    Route::post('item/create','store');
+    Route::get('item/{item}','show');
+    Route::post('item/edit/{id}','update');
+    Route::delete('item/{item}','destroy');
 });
 
 

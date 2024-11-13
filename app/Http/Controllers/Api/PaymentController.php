@@ -8,7 +8,7 @@ use App\Models\Payment;
 class PaymentController extends BaseController
 {
     public function index(){
-        $data=Payment::get();
+        $data=Payment::with('vendor','expense','client')->get();
         return $this->sendResponse($data,"Payment data");
     }
 
