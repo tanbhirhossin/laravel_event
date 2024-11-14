@@ -18,6 +18,10 @@ return new class extends Migration
             $table->decimal('pay_amount');
             $table->string('event_expense_id');
             $table->string('client_id');
+            $table->string('pay_type');
+            $table->string('bank_name');
+            $table->string('check_number');
+            $table->string('check_date');
             $table->timestamps();
         });
     }

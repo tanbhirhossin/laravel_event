@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('employee_id');
             $table->decimal('total_amount');
             $table->decimal('discount');
+            $table->decimal('tax');
+            $table->decimal('gtotal');
+            $table->decimal('discountamt');
+            $table->decimal('taxamt');
             $table->string('vendor_id');
             $table->timestamps();
         });

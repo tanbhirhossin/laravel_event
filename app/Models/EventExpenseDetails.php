@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class EventExpenseDetails extends Model
 {
     use HasFactory;
-    protected $fillable=['item_id', 'event_expense_id', 'amount'];
+    protected $fillable=['item_id', 'qty', 'event_expense_id', 'amount'];
 
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    protected $fillable=['vendor_id', 'pay_date', 'pay_amount', 'event_expense_id','client_id'];
+    protected $fillable=['vendor_id', 'pay_date', 'pay_amount', 'event_expense_id','client_id','pay_type','bank_name','check_number','check_date'];
 
     public function vendor()
     {

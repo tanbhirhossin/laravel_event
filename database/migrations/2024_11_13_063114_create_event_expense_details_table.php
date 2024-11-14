@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('event_expense_details', function (Blueprint $table) {
             $table->id();
             $table->string('item_id');
+            $table->string('qty');
             $table->string('event_expense_id');
             $table->decimal('amount');
             $table->timestamps();
