@@ -6,54 +6,66 @@ use App\Http\Controllers\Api\BaseController;
 use Illuminate\Http\Request;
 use App\Models\Expense;
 use App\Models\EventExpenseDetails;
+use App\Models\Payment;
+use DB;
 class ExpenseController extends BaseController
 {
     public function index(){
-        $data=Expense::get();
+        $data=Expense::with('event','employee','vendor')->get();
         return $this->sendResponse($data,"Expense data");
     }
 
 
     public function store(Request $request){
-        //return $request->all();
-//`id`, `event_id`, `employee_id`, `total_amount`, `discount`, `vendor_id`
-        $purchase_data['employee_id']=$request->input['employee_id'];
-        $purchase_data['event_id']=$request->input['event_id'];
-        $purchase_data['vendor_id']=$request->input['vendor_id'];
-        $purchase_data['purchase_date']=$request->input['purchase_date'];
-        $purchase_data['total_amount']=$request->totalData['total'];
-        $purchase_data['discount']=$request->totalData['discount'];
+        try {
+            DB::beginTransaction();
+            //return $request->all();
+    //`id`, `event_id`, `employee_id`, `total_amount`, `discount`, `vendor_id`
+            $purchase_data['employee_id']=$request->input['employee_id'];
+            $purchase_data['event_id']=$request->input['event_id'];
+            $purchase_data['vendor_id']=$request->input['vendor_id'];
+            $purchase_data['purchase_date']=$request->input['purchase_date'];
+            $purchase_data['total_amount']=$request->totalData['total'];
+            $purchase_data['discount']=$request->totalData['discount'];
 
-        $purchase_data['tax']=$request->totalData['tax'];
-        $purchase_data['gtotal']=$request->totalData['finalTotal'];
-        $purchase_data['discountamt']=$request->totalData['discountAmt']?? 0;
-        $purchase_data['taxamt']=$request->totalData['taxAmt']?? 0;
+            $purchase_data['tax']=$request->totalData['tax'];
+            $purchase_data['gtotal']=$request->totalData['finalTotal'];
+            $purchase_data['discountamt']=$request->totalData['discountAmt']?? 0;
+            $purchase_data['taxamt']=$request->totalData['taxAmt']?? 0;
 
-        $data=Expense::create($purchase_data);
+            $data=Expense::create($purchase_data);
+            if($data){
+                foreach($request->cartitems as $itms){
+                    $item['event_expense_id']=$data->id;
+                    $item['item_id']=$itms['id'];
 
-        foreach($request->cartitems as $itms){
-            $item['event_expense_id']=$data->id;
-            $item['item_id']=$itms['id'];
+                    $item['qty']=$itms['quantity'];
 
-            $item['qty']=$itms['quantity'];
+                    $item['amount']=$itms['price'];
+                    EventExpenseDetails::create($item);
+                }
 
-            $item['amount']=$itms['price'];
-            EventExpenseDetails::create($item);
+                if($request->input['amount'] > 0){
+                    $payment['event_expense_id']=$data->id;
+                    $payment['vendor_id']=$request->input['vendor_id'];
+                    $payment['pay_amount']=$request->input['amount'];
+                    $payment['pay_date']=$request->input['purchase_date'];
+                    $payment['event_id']=$request->input['event_id'];
+
+                    $payment['pay_type']=$request->input['pay_type'];
+                    $payment['bank_name']=$request->input['bank_name'];
+                    $payment['check_number']=$request->input['check_number'];
+                    $payment['check_date']=$request->input['check_date'];
+                    Payment::create($payment);
+                }
+            }
+            DB::commit();
+            return $this->sendResponse($data,"Purchase created successfully");
+        } catch (\PDOException $e) {
+            // Woopsy
+            DB::rollBack();
+            return $this->sendError($e,"Please try again");
         }
-
-        $payment['event_expense_id']=$data->id;
-        $payment['vendor_id']=$request->input['vendor_id'];
-        $payment['pay_amount']=$request->input['amount'];
-        $payment['pay_date']=$request->input['purchase_date'];
-
-        $payment['pay_type']=$request->input['pay_type'];//add
-        $payment['bank_name']=$request->input['bank_name'];//add
-        $payment['check_number']=$request->input['check_number'];//add
-        $payment['check_date']=$request->input['check_date'];//add
-
-        Payment::create($payment);
-
-        return $this->sendResponse($data,"Purchase created successfully");
     }
     // public function show(Purchase $purchase){
     //     $purchase=Purchase::with('supplier','details')->withSum('payment','amount')->find($purchase->id);

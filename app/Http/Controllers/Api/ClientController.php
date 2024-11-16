@@ -8,7 +8,7 @@ use App\Models\Client;
 class ClientController extends BaseController
 {
     public function index(){
-        $data=Client::get();
+        $data=Client::withSum('payment','pay_amount')->withSum('event','event_cost')->get();
         return $this->sendResponse($data,"Client data");
     }
 

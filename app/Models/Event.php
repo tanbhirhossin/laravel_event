@@ -15,5 +15,10 @@ class Event extends Model
     {
         return $this->belongsTo(Client::class, 'client_id');
     }
+
+    public function expense()
+    {
+        return $this->hasMany(Expense::class, 'event_id');
+    }
     
 }

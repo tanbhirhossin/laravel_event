@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('vendor_id');
+            $table->string('vendor_id')->nullable();
             $table->date('pay_date');
             $table->decimal('pay_amount');
-            $table->string('event_expense_id');
-            $table->string('client_id');
-            $table->string('pay_type');
-            $table->string('bank_name');
-            $table->string('check_number');
-            $table->string('check_date');
+            $table->string('event_expense_id')->nullable();
+            $table->string('event_id')->nullable();
+            $table->string('client_id')->nullable();
+            $table->string('pay_type')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('check_number')->nullable();
+            $table->string('check_date')->nullable();
             $table->timestamps();
         });
     }
