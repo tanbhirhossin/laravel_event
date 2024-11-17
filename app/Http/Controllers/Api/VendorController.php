@@ -9,7 +9,7 @@ use App\Models\Vendors;
 class VendorController extends BaseController
 {
     public function index(){
-        $data=Vendors::get();
+        $data=Vendors::withSum('expense','total_amount')->withSum('payment','pay_amount')->get();
         return $this->sendResponse($data,"Vendors data");
     }
 
