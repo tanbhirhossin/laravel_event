@@ -77,6 +77,8 @@ Route::controller(ClientController::class)->group(function(){
     Route::get('client/{client}','show');
     Route::post('client/edit/{id}','update');
     Route::delete('client/{client}','destroy');
+    Route::post('client/login','_login');
+
 });
 Route::controller(EventController::class)->group(function(){
     Route::get('event','index');

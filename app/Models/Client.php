@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-    protected $fillable=['name', 'contact_no', 'email', 'address'];
+    protected $fillable=['name', 'contact_no', 'email','password', 'address'];
 
     public function event()
     {

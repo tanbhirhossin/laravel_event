@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 class PaymentController extends BaseController
 {
-    public function index(){
-        $data=Payment::with('vendor','expense','client','event')->get();
+    public function index(Request $request){
+        $data=Payment::with('vendor','expense','client','event');
+        if($request->client_id){
+            $data=$data->where('client_id',$request->client_id);
+        }
+        $data=$data->get();
         return $this->sendResponse($data,"Payment data");
     }
 

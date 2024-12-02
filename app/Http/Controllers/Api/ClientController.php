@@ -31,4 +31,18 @@ class ClientController extends BaseController
         $client=$client->delete();
         return $this->sendResponse($client,"Client deleted successfully");
     }
+
+    public function _login(Request $r)
+    {
+        $data=Client::where('contact_no',$r->contact_number)
+                ->where('password',$r->password)
+                ->first()?->toArray();
+        if($data){
+            $d['token']=$data['id'];
+            $d['data']=$data;
+            return $this->sendResponse($d,"User login successfully");
+        }else{
+            return $this->sendError(['error'=>'contact number or password is not correct'],"Unauthorized",400);
+        }
+    }
 }
